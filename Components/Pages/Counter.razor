@@ -1,0 +1,88 @@
+﻿@page "/counter"
+@using RestaurantManagement.Data
+@inject IJSRuntime JSRuntime
+
+
+<div class="menu">
+    <h4>Current Menu Items</h4>
+    @if (menuList == null || !menuList.Any())
+    {
+        <p>No menu items found</p>
+    }
+    else
+    {
+        @foreach (var categoryGroup in menuList.GroupBy(item => item.Category))
+        {
+            <h5>@categoryGroup.Key</h5>
+            <table class="menu-items">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in categoryGroup)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.Price</td>
+                            <td><button @onclick="@(async () => await ConfirmDelete(item))">Delete</button></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    }
+</div>
+
+
+<div class="add-menu-item">
+    <h4>Add New Menu Item</h4>
+    <input @bind="name" placeholder="Name" />
+    <input @bind="price" placeholder="Price" />
+    <input @bind="category" placeholder="Category" />
+    <button @onclick="AddMenuItem">Add</button>
+</div>
+
+
+@code {
+    string name = string.Empty;
+    string price = string.Empty;
+    string category = string.Empty;
+    MenuManager manuManager;
+
+    MenuManager menuManager = new MenuManager();
+
+    List<Menu> menuList = MenuManager.GetMenu();
+
+    private void AddMenuItem()
+    {
+        if (!string.IsNullOrWhiteSpace(name) && !string.IsNullOrWhiteSpace(price) && !string.IsNullOrWhiteSpace(category))
+        {
+            var newItem = new Menu(name, double.Parse(price), category);
+            MenuManager.AddMenuItem(newItem);
+            menuList = MenuManager.GetMenu();
+
+            name = string.Empty;
+            price = string.Empty;
+            category = string.Empty;
+        }
+    }
+
+    private async Task ConfirmDelete(Menu item)
+    {
+        var confirmed = await JSRuntime.InvokeAsync<bool>("confirm", new object[] { "Are you sure you want to delete?" });
+        if (confirmed)
+        {
+            DeleteMenuItem(item);
+        }
+    }
+
+    private void DeleteMenuItem(Menu item)
+    {
+        MenuManager.DeleteMenuItem(item);
+        menuList = MenuManager.GetMenu();
+    }
+}
