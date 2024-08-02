@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RestaurantManagement.Data
 {
-    public class EmployeeManager
+    public class EmployeeDB
     {
     }
 }

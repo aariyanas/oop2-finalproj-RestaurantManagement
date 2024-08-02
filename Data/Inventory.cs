@@ -3,31 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SQLite;
 
 namespace RestaurantManagement.Data
 {
+    [Table("Inventory")]
     public class Inventory
     {
-        private string _name;
-        private int _quantity;
-        private double _price;
-        private string _category;
-        private int _quantityToOrder;
+        [PrimaryKey, AutoIncrement]
+        [Column("Id")]
+        public int Id { get; set; }
 
-        public Inventory(string name, int quantity, double price, string category)
-        {
-            _name = name;
-            _quantity = quantity;
-            _price = price;
-            _category = category;
-            _quantityToOrder = 0;
-        }
+        [Column("Name")]
+        public string Name { get; set; }
 
-        public string Name { get => _name; set => _name = value; }
-        public int Quantity { get => _quantity; set => _quantity = value; }
-        public double Price { get => _price; set => _price = value; }
-        public string Category { get => _category; set => _category = value; }
-        public int QuantityToOrder { get => _quantityToOrder; set => _quantityToOrder = value; }
+        [Column("Quantity")]
+        public double Quantity { get; set; }
+
+        [Column("Price")]
+        public string Price { get; set; }
+
+        [Column("Category")]
+        public string Category { get; set; }
+
+        [Column("QuantityToOrder")]
+        public double QuantityToOrder { get; set; }
+
+
     }
 }
-

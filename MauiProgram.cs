@@ -1,5 +1,6 @@
 ﻿using Blazorise;
 using Microsoft.Extensions.Logging;
+using RestaurantManagement.Data;
 
 namespace RestaurantManagement
 {
@@ -16,10 +17,16 @@ namespace RestaurantManagement
                 });
 
             builder.Services.AddMauiBlazorWebView();
+            builder.Services.AddSingleton<MenuDB>();
+            builder.Services.AddSingleton<InventoryDB>();
+            //builder.Services.AddSingleton<EmployeeDB>();
+            builder.Services.AddTransient<MainPage>();
+
 
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();
             builder.Logging.AddDebug();
+            builder.Services.AddBlazorise();
 #endif
 
             return builder.Build();

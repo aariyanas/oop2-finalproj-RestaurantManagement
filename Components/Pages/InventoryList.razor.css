@@ -42,7 +42,7 @@
     }
 
     .inventory-items .delete-button {
-        background-color: #d9534f; 
+        background-color: #d9534f;
         border: none;
         color: white;
         padding: 8px 12px;
@@ -60,7 +60,7 @@
         }
 
     .inventory-items .order-button {
-        background-color: #5bc0de; 
+        background-color: #5bc0de;
         border: none;
         color: white;
         padding: 8px 12px;

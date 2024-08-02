@@ -3,25 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SQLite;
 
 namespace RestaurantManagement.Data
 {
+    [Table("Menu")]
     public class Menu
     {
-        private string _name;
-        private double _price;
-        private string _category;
+        [PrimaryKey, AutoIncrement]
+        [Column("Id")]
+        public int Id { get; set; }
 
-        public Menu(string name, double price, string category)
-        {
-            _name = name;
-            _price = price;
-            _category = category;
-        }
+        [Column("Name")]
+        public string Name { get; set; }
 
-        public string Name { get => _name; set => _name = value; }
-        public double Price { get => _price; set => _price = value; }
-        public string Category { get => _category; set => _category = value; }
-        
+        [Column("Price")]
+        public double Price { get; set; }
+
+        [Column("Category")]
+        public string Category { get; set; }
     }
 }
+
